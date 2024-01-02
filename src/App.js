@@ -1,24 +1,52 @@
-import logo from './logo.svg';
-import './App.css';
+import { useRef, useState } from "react";
+
+import GameOfLife from "./components/game-of-life";
+import "./App.css";
 
 function App() {
+  const [stateIndex, setStateIndex] = useState(0);
+  const [type, setType] = useState("blinker");
+  const ref = useRef(null);
+  
+  function handleStart() {
+    setStateIndex(0);
+    clearInterval(ref.current);
+    ref.current = setInterval(() => {
+      setStateIndex(i => i+1);
+    }, 500);
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+    <>
+      <header>
+        <h1>Game of Life</h1>
       </header>
-    </div>
+      <main>
+        <GameOfLife type={type} stateIndex={stateIndex} />
+      </main>
+      <select
+        value={type}
+        onChange={(e) => {
+          setType(e.target.value);
+          setStateIndex(0);
+        }}
+      >
+        <option value="blinker">Blinker</option>
+        <option value="block">Block</option>
+        <option value="beehive">Beehive</option>
+        <option value="tube">Tube</option>
+        <option value="toad">Toad</option>
+        <option value="glider">Glider</option>
+        <option value="penta-decathlon">Penta decathlon</option>
+        <option value="penta-decathlon-full">Penta decathlon (full)</option>
+        <option value="pulsar">Pulsar</option>
+      </select>
+      <button onClick={() => setStateIndex(stateIndex + 1)}>Next</button>
+
+      <button onClick={() => handleStart() }>Start</button>
+      <button onClick={() => clearInterval(ref.current)}>Stop</button>
+      <footer>Footer</footer>
+    </>
   );
 }
 
