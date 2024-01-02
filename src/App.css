@@ -37,30 +37,16 @@
     transform: rotate(360deg);
   }
 }
-.data-container {
+
+main{
   margin: auto;
   display: table;
 }
-.data-row {
+.search-container {
   display: flex;
-  /* padding: 0.5em; */
+  margin: 1em 0;
 }
-.data-row:last-child {
-  border-bottom: 1px solid;
-}
-
-.data-col {
-  padding: 0.5em;
-  border-top: 1px solid;
-  width: 23px;
-  height: 23px;
-  text-align: center;
-  border-left: 1px solid;
+.search-container > * {
+  margin-right: 1em;
 }
 
-.data-col.bg {
-  background-color: #282c34;
-}
-.data-col:last-child {
-  border-right: 1px solid;
-}
