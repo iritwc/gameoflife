@@ -43,7 +43,7 @@ main{
   display: table;
 }
 .search-container {
-  display: flex;
+  display: flex;  
   margin: 1em 0;
 }
 .search-container > * {

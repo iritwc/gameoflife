@@ -7,7 +7,7 @@ const toKey = (i, j) => `${i},${j}`;
 
 export default function GameOfLife({ type, stateIndex }) {
   const N = 19;
-  const BoardDimensions = new Array(N).fill(0).map((value, i) => i);
+  const BoardDimensions = new Array(N).fill(0).map((_, i) => i);
   const data = useData(`${baseUrl}/${type}?n=${N}`);
   let currentSet = new Set();
 

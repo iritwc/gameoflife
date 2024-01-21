@@ -1,19 +1,31 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import GameOfLife from "./components/game-of-life";
 import "./App.css";
 
 function App() {
   const [stateIndex, setStateIndex] = useState(0);
+  const [duration, setDuration] = useState(1000);
   const [type, setType] = useState("blinker");
   const ref = useRef(null);
 
   function handleStart() {
-    setStateIndex(0);
     clearInterval(ref.current);
     ref.current = setInterval(() => {
       setStateIndex((i) => i + 1);
-    }, 500);
+    }, duration);
+
+    setStateIndex(0);
+  }
+
+  function handleNext() {
+    clearInterval(ref.current);
+    setStateIndex(stateIndex + 1);
+  }
+
+  function handlePrev() {
+    clearInterval(ref.current);
+    setStateIndex(Math.max(0, stateIndex - 1))
   }
 
   return (
@@ -40,10 +52,26 @@ function App() {
             <option value="penta-decathlon-full">Penta decathlon (full)</option>
             <option value="pulsar">Pulsar</option>
           </select>
-          <button disabled={stateIndex===0} onClick={() => setStateIndex(Math.max(0, stateIndex - 1))}>Prev</button>
-          <button onClick={() => setStateIndex(stateIndex + 1)}>Next</button>
-          <button onClick={() => handleStart()}>Start</button>
+          <button
+            disabled={stateIndex === 0}
+            onClick={handlePrev}
+          >
+            Prev
+          </button>
+          <button onClick={handleNext}>Next</button>
+          <button onClick={handleStart}>Start</button>
           <button onClick={() => clearInterval(ref.current)}>Stop</button>
+          <label>
+            <input
+              type="range"
+              min="100"
+              max="3000"
+              value={duration}
+              onChange={(e)=> setDuration(Number(e.target.value))}
+            />
+            <br />
+            duration: {duration} ms
+          </label>
           <strong>{stateIndex}</strong>
         </div>
         <GameOfLife type={type} stateIndex={stateIndex} />
